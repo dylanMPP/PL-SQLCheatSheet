@@ -38,3 +38,48 @@ END;
 /    
 ```
 ## **Explicit Cursors**
+Los cursores se pueden declarar, abrir, obtener y cerrar, de la siguiente manera:
+
+teniendo en cuenta la tabla anterior 
+
+**Declaracion**
+```
+CURSOR e_employee IS 
+   SELECT name, id, salary FROM employee; 
+```
+
+**Open**
+```
+OPEN e_employee; 
+```
+
+**Get**
+```
+FETCH e_employee INTO nameE, idE, salaryE; 
+```
+
+
+**Close**
+```
+CLOSE e_employee;
+```
+
+Example:
+```
+DECLARE 
+   nameE employee.name%type; 
+   idE employee.id%type; 
+   salaryE employee.salary%type; 
+   CURSOR e_employee is 
+      SELECT name, id, salary FROM customers where salary>20000; 
+BEGIN 
+   OPEN e_employee; 
+   LOOP 
+   FETCH e_employee into nameE, idE, salaryE; 
+      EXIT WHEN e_employee%notfound; 
+      dbms_output.put_line(idE || ' ' || NameE || ' ' || salaryE); 
+   END LOOP; 
+   CLOSE e_employee; 
+END; 
+/
+```

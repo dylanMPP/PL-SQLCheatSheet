@@ -1,4 +1,6 @@
-# **Blocks**
+# **Blocks and Basic Syntax**
+
+## **Blocks**
 
 We know that PL/SQL is a block-structured language. A PL/SQL block is defined by the keywords `DECLARE`, `BEGIN`, `EXCEPTION`, and `END`, which break up the block into three sections:
   - Declarativo: Statements that declare variables, constants and other elements. The declared elements can be used in that block. They are started with the keyword `DECLARE
@@ -45,7 +47,7 @@ EXCEPTION
 END;
 ```
 
-# **Delimiters**
+## **Delimiters**
 
 A delimiter is a symbol with a special meaning. The following are the delimiters:
 

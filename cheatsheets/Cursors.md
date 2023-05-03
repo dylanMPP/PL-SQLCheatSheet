@@ -1,7 +1,7 @@
 # **Cursors**
 Contains information about rows returned by a statement. Two types of cursors are known:
-	- Implicit
-	- Explicit
+  - Implicit
+  - Explicit
 
 ##  **Implicit Cursors**
 

@@ -1,26 +1,30 @@
 # **Cursors**
-Contiene información de filas devueltas por una instrucción. Se conocen dos tipos de cursores:
+Contains information about rows returned by a statement. Two types of cursors are known:
+	- Implicit
+	- Explicit
 
 ##  **Implicit Cursors**
 
-Son creados por oracle cuando las instrucciones son ejecutadas y no se llaman a se asignan a un cursor. Son comandos sql que permiten ver la información de la instrucción, como si afecto o no a la tabla y en que cantidad la afecto.
+They are created by oracle when instructions are executed and are not called but assigned to a cursor. They are sql commands that allow you to see the information of the instruction, such as whether or not it affected the table and how much it affected it.
 
-|Comando|Descripcion|
+|Command|Description|
 | :-----: | :----:|
-|**sql%found**|De vuelve verdadero si afecto a una o más filas, de lo contrario falso.|
-|**sql%notfound**|De vuelve verdadero si afectó alguna fila, de lo contrario falso.|
-|**sql%isOpen**|Devuelve falso para cursores implicitos.|
-|**sql%rowCount**|Devuele el numero de filas afectadas.|
+|**sql%found**|Returns true if it affected one or more rows, false otherwise.|
+|**sql%notfound**|Returns true if it affected any rows, false otherwise.|
+|**sql%isOpen**|Returns false for implicit cursors.|
+|**sql%rowCount**|Return the number of affected rows.|
 
 We have the next table Employee:
 
 |NAME|ID|SALARY|
 | :-----: | :----: | :----:|
 |JHON| 1 | 1500|
-|kAREN | 2 | 756000|
-|lUIS | 3 | 8500|
+|KAREN | 2 | 756000|
+|LUIS | 3 | 8500|
 |DIOMEDES | 4 | 26000|
 |FERNANDO | 5 | 30400|
+
+Then
 
 ```
 DECLARE  
@@ -38,11 +42,11 @@ END;
 /    
 ```
 ## **Explicit Cursors**
-Los cursores se pueden declarar, abrir, obtener y cerrar, de la siguiente manera:
+Cursors can be declared, opened, gotten, and closed, as follows:
 
-teniendo en cuenta la tabla anterior 
+Considering the above table
 
-**Declaracion**
+**Declaration**
 ```
 CURSOR e_employee IS 
    SELECT name, id, salary FROM employee; 
@@ -64,7 +68,8 @@ FETCH e_employee INTO nameE, idE, salaryE;
 CLOSE e_employee;
 ```
 
-Example:
+We provide an example
+
 ```
 DECLARE 
    nameE employee.name%type; 

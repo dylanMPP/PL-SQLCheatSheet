@@ -12,20 +12,30 @@ We have the next table to do de example:
 **BEFORE**
 
 Usually it is use to validation and update.
-
-
+```
+create table employee ( 
+  name varchar(10), 
+  id_employee number,
+  salary number, 
+  primary key (id_employee)
+  );
+```
 ```
 CREATE OR REPLACE TRIGGER min_Salary
 BEFORE INSERT or UPDATE on employee
 FOR EACH ROW 
 
 DECLARE
-
+  exception_minimunSalary EXCEPTION;
 BEGIN
-  
+    
   if(:NEW.salary<1000) then
-  DBMS_OUTPUT.PUT_LINE ('Employee must have at least a minimun salary');  
-    END IF;
+    RAISE exception_minimunSalary;  
+  END IF;
+EXCEPTION 
+
+   WHEN exception_minimunSalary THEN 
+   RAISE_APPLICATION_ERROR(-20001, 'Employee must have at least a minimun salary');
 END;    
 
 ```
@@ -35,14 +45,74 @@ when it insert in table
 ```
 Insert into employee values ('kevin',7,450);
 ```
+The result would be :  
+
+```
+ORA-20001: Employee must have at least a minimun salary ORA-06512: at "SQL_PWHOMPNQNMYNZNWJJGOJJBXZS.MIN_SALARY", line 11
+```
+
 
 
 **AFTER**
 
+```
+CREATE OR REPLACE TRIGGER check_user
+  AFTER LOGON ON DATABASE
+  BEGIN
+    check_user;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RAISE_APPLICATION_ERROR
+        (-20000, 'Unexpected error: '|| DBMS_Utility.Format_Error_Stack);
+ END;
+/
+```
 
+**INSTEAD OF**
 
+**One important information:** In Oracle, you can create an *INSTEAD* OF trigger for a view only. You cannot create an *INSTEAD*  OF trigger for a table. So the command to declarete a trigger is: 
 
+first we create a view and new table called departments:
 
+```
+create table departments (
+    name varchar(10),
+    id_D number,
+    location varchar(10),
+    id_employee number,
+    primary key (id_D),
+    foreign key (id_employee) references employee (id_employee)
+);
+```
+And the view:
 
+```
+CREATE VIEW vw_employee AS
+    SELECT 
+        employee.name, 
+        salary
+    FROM 
+        employee
+    INNER JOIN departments USING (id_employee);
+```
+**(Before to do the view, the table that are referenced must be exist).**
 
+```
+CREATE OR REPLACE TRIGGER new_customer_trg
+    INSTEAD OF INSERT ON vw_customers
+    FOR EACH ROW
+DECLARE
+    l_customer_id NUMBER;
+BEGIN
+    -- insert a new customer first
+    INSERT INTO customers(name, address, website, credit_limit)
+    VALUES(:NEW.NAME, :NEW.address, :NEW.website, :NEW.credit_limit)
+    RETURNING customer_id INTO l_customer_id;
+    
+    -- insert the contact
+    INSERT INTO contacts(first_name, last_name, email, phone, customer_id)
+    VALUES(:NEW.first_name, :NEW.last_name, :NEW.email, :NEW.phone, l_customer_id);
+END;
+```
+Then when it insert in a view, the insert *INSTEAD OF* to do it in the view, it will do in the respective *TABLE(s)*
 

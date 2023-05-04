@@ -9,7 +9,7 @@ We have the next table to do de example:
 |DIOMEDES | 4 | 26000|
 |FERNANDO | 5 | 30400|
 
-##**BEFORE**
+## **BEFORE**
 
 Usually it is use to validation and update.
 ```
@@ -51,9 +51,7 @@ The result would be :
 ORA-20001: Employee must have at least a minimun salary ORA-06512: at "SQL_PWHOMPNQNMYNZNWJJGOJJBXZS.MIN_SALARY", line 11
 ```
 
-
-
-##**AFTER**
+## **AFTER**
 In an example to use *AFTER* is to receive a record to update another table in which it also stores information, in this case a trigger is used for the moment that the information of a product is inserted, also in another table an "automatic" *INSERT* of the product with its respective price is made:
 
 ```
@@ -70,7 +68,7 @@ BEGIN
 END ; 
 ```
 
-##**INSTEAD OF**
+## **INSTEAD OF**
 
 **One important information:** In Oracle, you can create an *INSTEAD* OF trigger for a view only. You cannot create an *INSTEAD*  OF trigger for a table. So the command to declarete a trigger is: 
 

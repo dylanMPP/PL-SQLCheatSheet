@@ -13,7 +13,7 @@ my_variable Varchar(10) DEFAULT 'Hola mundo';
 BEGIN
  --this space is necesary otherwise there will be an error.
  --TO print the information use the next command.
- dbms_output.put_line('Literal text',);
+ dbms_output.put_line('Literal text ',my_variable);
 END;
 ```
 *Note*
@@ -29,11 +29,12 @@ b Integer := 25;
 c Integer;
 BEGIN
  --set value.
-  a=21
+  a=21;
  --Operate.
 c := a+b;
+dbms_output.put_line('value = ',c);
  --Use in SELECT with tables.
- SELECT * FROM ExampleTable WHERE id = a;  
+ --SELECT * FROM ExampleTable WHERE id = a;  
 
 END;
 ```

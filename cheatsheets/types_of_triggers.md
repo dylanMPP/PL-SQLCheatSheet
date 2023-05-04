@@ -9,7 +9,7 @@ We have the next table to do de example:
 |DIOMEDES | 4 | 26000|
 |FERNANDO | 5 | 30400|
 
-**BEFORE**
+##**BEFORE**
 
 Usually it is use to validation and update.
 ```
@@ -53,22 +53,24 @@ ORA-20001: Employee must have at least a minimun salary ORA-06512: at "SQL_PWHOM
 
 
 
-**AFTER**
+##**AFTER**
+In an example to use *AFTER* is to receive a record to update another table in which it also stores information, in this case a trigger is used for the moment that the information of a product is inserted, also in another table an "automatic" *INSERT* of the product with its respective price is made:
 
 ```
-CREATE OR REPLACE TRIGGER check_user
-  AFTER LOGON ON DATABASE
-  BEGIN
-    check_user;
-  EXCEPTION
-    WHEN OTHERS THEN
-      RAISE_APPLICATION_ERROR
-        (-20000, 'Unexpected error: '|| DBMS_Utility.Format_Error_Stack);
- END;
-/
+CREATE OR REPLACE TRIGGER TR_PRODUCTOS_01
+  AFTER INSERT ON PRODUCTOS  
+  FOR EACH ROW
+DECLARE
+  -- local variables 
+BEGIN
+  INSERT INTO PRECIOS_PRODUCTOS
+  (CO_PRODUCTO,PRECIO,FX_ACTUALIZACION)
+  VALUES
+  (:NEW.CO_PRODUCTO,100,SYSDATE);
+END ; 
 ```
 
-**INSTEAD OF**
+##**INSTEAD OF**
 
 **One important information:** In Oracle, you can create an *INSTEAD* OF trigger for a view only. You cannot create an *INSTEAD*  OF trigger for a table. So the command to declarete a trigger is: 
 
